@@ -6,12 +6,12 @@ TableController::TableController() {
 
 //creates a table with a given name
 Table TableController::createTable(std::string name) {
-	Table table(this->verifyTableName(name));
+	Table table(this->toLowercase(name));
 	return table;
 }
 
 //converts the name to lowercase
-std::string TableController::verifyTableName(std::string name) {
+std::string TableController::toLowercase(std::string name) {
 	//here we use a library function to convert the name to lowercase
 	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
 	return name;
@@ -29,7 +29,7 @@ void TableController::addColumn(Table& table, Column& const column) {
 
 //creates a column and then adds it to the list
 void TableController::createColumn(Table& table, std::string name, std::string type) {
-	if (table.columnExists(name)) {
+	if (table.columnExists(this->toLowercase(name))) {
 		std::cout << "Sorry. There is already a column with name " << name << " in table " 
 			<< table.getTableName() << ".\n";
 	} else {
@@ -40,7 +40,7 @@ void TableController::createColumn(Table& table, std::string name, std::string t
 }
 
 //gives the information about the columns in the table (name and type)
-void TableController::describe(Table& const table) {
+void TableController::tableInfo(Table& const table) {
 	if (!table.empty()) {
 		std::cout << "Table " + table.getTableName() +" contains the following columns with the type showed:\n";
 		std::cout << table.tableInfo();
@@ -61,7 +61,7 @@ void TableController::columns(Table& const table) {
 
 //renames a table
 void TableController::rename(Table& table, std::string name) {
-	table.setTableName(name);
+	table.setTableName(this->toLowercase(name));
 }
 
 //returns the name of the table

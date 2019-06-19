@@ -6,13 +6,13 @@
 
 class TableController {
 private:
-	std::string verifyTableName(std::string);
+	std::string toLowercase(std::string);
 public:
 	TableController();
 	Table createTable(std::string);
 	void addColumn(Table&, Column& const);
 	void createColumn(Table&, std::string, std::string);
-	void describe(Table& const);
+	void tableInfo(Table& const);
 	void columns(Table& const);
 	void rename(Table&, std::string);
 	std::string getName(Table& const);
