@@ -15,6 +15,7 @@ private:
 	void grow();
 
 	void add(Column&);
+	bool columnExists(std::string);
 	std::string columnNames();
 	std::string tableInfo();
 

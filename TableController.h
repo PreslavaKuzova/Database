@@ -1,5 +1,6 @@
 #pragma once
 #include "Table.h"
+#include "Column.h"
 #include <iostream>
 #include <algorithm>
 
@@ -9,8 +10,10 @@ private:
 public:
 	TableController();
 	Table createTable(std::string);
-	void addColumn(Table&, std::string, std::string);
+	void addColumn(Table&, Column& const);
+	void createColumn(Table&, std::string, std::string);
 	void describe(Table& const);
 	void columns(Table& const);
 	void rename(Table&, std::string);
+	std::string getName(Table& const);
 };

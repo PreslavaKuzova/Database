@@ -45,6 +45,15 @@ void Table::add(Column& column) {
 	columns[++top] = column;
 }
 
+bool Table::columnExists(std::string name) {
+	for (int i = 0; i <= this->top; i++) {
+		if (!name.compare(this->columns[i].getColumnName())) {
+			return true;
+		}
+	}
+	return false;
+}
+
 std::string Table::columnNames() {
 	std::string stringColumns = "";
 	for (int i = 0; i <= this->top; i++) {
