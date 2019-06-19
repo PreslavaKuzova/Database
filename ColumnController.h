@@ -10,4 +10,5 @@ public:
 	ColumnController();
 	Column createColumn(std::string, std::string, bool = false);
 	std::string getColumnInfo(Column&);
+	std::string getColumnName(Column& const);
 };
