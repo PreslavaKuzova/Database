@@ -41,7 +41,6 @@ void Database::addTable(Table& table) {
 	tables[++top] = table;
 }
 
-//add a check in the CONTROLLER whether the database is EMPTY and whether the TABLE EXISTS
 void Database::removeTable(std::string tableName) {
 	int j = 0;
 	Table* array = new Table[this->size];
