@@ -7,30 +7,18 @@
 #include "DatabaseController.h"
 
 int main() {
-	//have to use the copy constructor
-	Column column(ColumnController().createColumn("name", "incorrect type"));
-	std::cout << ColumnController().getColumnInfo(column);
-
-	Table table(TableController().createTable("!awesome table!"));
-	TableController().describe(table);
-	TableController().createColumn(table, "new column", "INT");
-	TableController().describe(table);
-	TableController().columns(table);
-	TableController().addColumn(table, column);
-	TableController().columns(table);
-	TableController().describe(table);
-
 	Database database("new database");
 	DatabaseController().create(database, "table1");
 	DatabaseController().create(database, "table2");
 	DatabaseController().create(database, "table3");
-	DatabaseController().tableNames(database);
-	std::cout << std::endl << "Table exists: " << DatabaseController().tableExists(database, "tale1");
-	std::cout << "\nRename: "<< std::endl;
-	DatabaseController().renameTable(database, "table1", "AWESOME TABLE");
-	DatabaseController().tableNames(database);
-	DatabaseController().remove(database, "table2");
-	DatabaseController().tableNames(database);
-	DatabaseController().create(database, "table3");
+	DatabaseController().showTables(database);
+	DatabaseController().renameTable(database, "table1", "newname");
+	DatabaseController().showTables(database);
+	DatabaseController().describe(database, "TAble3");
+
+	DatabaseController().renameTable(database, "TablE3", "tabLe3new");
+
+	DatabaseController().showTables(database);
+	
 	return 0;
 }
