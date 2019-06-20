@@ -1,18 +1,18 @@
 #include "Table.h"
 #include "Column.h"
 
-Table::Table(): tableName(""), size(0), top(-1){
+Table::Table() : tableName(""), size(0), top(-1) {
 	columns = new Column[0];
 }
 
-Table::Table(std::string tableName): tableName(tableName), size(1), top(-1) {
+Table::Table(std::string tableName) : tableName(tableName), size(1), top(-1) {
 	columns = new Column[0];
 }
 
-Table::Table(const Table& table): 
+Table::Table(const Table& table) :
 	tableName(table.tableName), size(table.size), top(table.top) {
 	columns = new Column[size];
-	for (int i = 0; i <= top; i++){
+	for (int i = 0; i <= top; i++) {
 		columns[i] = table.columns[i];
 	}
 }
@@ -23,9 +23,9 @@ Table& Table::operator=(const Table& table) {
 		this->size = table.size;
 		this->top = table.top;
 		delete[] columns;
-		
+
 		columns = new Column[size];
-		
+
 		for (int i = 0; i <= top; i++) {
 			columns[i] = table.columns[i];
 		}
@@ -84,9 +84,9 @@ void Table::grow() {
 	for (int i = 0; i <= top; i++) {
 		array[i] = columns[i];
 	}
-	
+
 	delete[] columns;
-	
+
 	columns = array;
 	size *= 2;
 }

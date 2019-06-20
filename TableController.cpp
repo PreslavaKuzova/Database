@@ -22,17 +22,19 @@ void TableController::addColumn(Table& table, Column& const column) {
 	if (table.columnExists(ColumnController().getColumnName(column))) {
 		std::cout << "Sorry. There is already a column with such a name in the table "
 			<< table.getTableName() << std::endl;
-	} else {
+	}
+	else {
 		table.add(column);
-	}	
+	}
 }
 
 //creates a column and then adds it to the list
 void TableController::createColumn(Table& table, std::string name, std::string type) {
 	if (table.columnExists(this->toLowercase(name))) {
-		std::cout << "Sorry. There is already a column with name " << name << " in table " 
+		std::cout << "Sorry. There is already a column with name " << name << " in table "
 			<< table.getTableName() << ".\n";
-	} else {
+	}
+	else {
 		Column column(ColumnController().createColumn(name, type));
 		table.add(column);
 		std::cout << "Successfully added new column to table " << table.getTableName() << ".\n";
@@ -42,11 +44,12 @@ void TableController::createColumn(Table& table, std::string name, std::string t
 //gives the information about the columns in the table (name and type)
 void TableController::tableInfo(Table& const table) {
 	if (!table.empty()) {
-		std::cout << "Table " + table.getTableName() +" contains the following columns with the type showed:\n";
+		std::cout << "Table " + table.getTableName() + " contains the following columns with the type showed:\n";
 		std::cout << table.tableInfo();
-	} else {
-		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() +" is empty.\n";
-	}	
+	}
+	else {
+		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
+	}
 }
 
 //gives information about the names of the columns in the table
@@ -54,7 +57,8 @@ void TableController::columns(Table& const table) {
 	if (!table.empty()) {
 		std::cout << "Table " << table.getTableName() << " contains columns with the following names:\n";
 		std::cout << table.columnNames() << std::endl;
-	} else {
+	}
+	else {
 		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
 	}
 }
