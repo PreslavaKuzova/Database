@@ -18,7 +18,7 @@ private:
 public:
 	Column();
 	Column(std::string, std::string, bool = false);
-	
+
 	//we only want these classes to have an access to the private members of the class
 	friend class ColumnController;
 	friend class Table;

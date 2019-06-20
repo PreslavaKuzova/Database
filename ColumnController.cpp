@@ -42,4 +42,3 @@ std::string ColumnController::getColumnInfo(Column& column) {
 std::string ColumnController::getColumnName(Column& const column) {
 	return column.getColumnName();
 }
-

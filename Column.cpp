@@ -1,10 +1,10 @@
 #include "Column.h"
 
-Column::Column(): 
+Column::Column() :
 	columnName(""), type("int"), unique(false) {
 }
 
-Column::Column(std::string name, std::string type, bool unique): 
+Column::Column(std::string name, std::string type, bool unique) :
 	columnName(name), type(type), unique(unique) {
 }
 
