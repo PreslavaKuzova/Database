@@ -1,10 +1,11 @@
 #include "Database.h"
 
-Database::Database(std::string name): databaseName(name), size(1), top(-1) {
+
+Database::Database(std::string name) : databaseName(name), size(1), top(-1) {
 	tables = new Table[0];
 }
 
-Database::Database(const Database& database): 
+Database::Database(const Database& database) :
 	databaseName(database.databaseName), size(database.size), top(database.top) {
 	tables = new Table[size];
 	for (int i = 0; i <= top; i++) {
@@ -12,7 +13,7 @@ Database::Database(const Database& database):
 	}
 }
 
-Database& Database::operator=(const Database& database){
+Database& Database::operator=(const Database& database) {
 	if (this != &database) {
 		this->databaseName = database.databaseName;
 		this->size = database.size;
@@ -23,7 +24,7 @@ Database& Database::operator=(const Database& database){
 
 		for (int i = 0; i <= top; i++) {
 			tables[i] = database.tables
-[i];
+				[i];
 		}
 	}
 	return *this;

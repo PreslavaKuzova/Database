@@ -14,16 +14,6 @@ public:
 	void describe(Database& const, std::string);
 	Table& returnTableByName(Database& const, std::string);
 
-	//when working with file is added
-	//maybe work with another controller and write the implementation there
-	void print(Database& const);
-	void load();
-	void save();
-	void select();
-	void update();
-	void deleteRow();
-	void insert();
-	void innerJoin();
-	void count();
-	void aggregate();
+	//we should only give the name to the table that has to be print
+	void print(Database& const, std::string);
 };

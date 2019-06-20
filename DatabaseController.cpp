@@ -18,7 +18,8 @@ std::string DatabaseController::toLowercase(std::string name) {
 void DatabaseController::add(Database& database, Table& const table) {
 	if (database.tableExists(TableController().getName(table))) {
 		std::cout << "Error. There is already a table with name " << TableController().getName(table) << " in the database.\n";
-	} else {
+	}
+	else {
 		database.addTable(table);
 		std::cout << "Successfully added a new table to the database.\n";
 	}
@@ -28,7 +29,8 @@ void DatabaseController::add(Database& database, Table& const table) {
 void DatabaseController::create(Database& database, std::string tableName) {
 	if (database.tableExists(tableName)) {
 		std::cout << "Error. There is already a table with name " << tableName << " in the database.\n";
-	} else {
+	}
+	else {
 		Table table(TableController().createTable(tableName));
 		database.addTable(table);
 		std::cout << "Successfully added a new table to the database.\n";
@@ -39,11 +41,13 @@ void DatabaseController::create(Database& database, std::string tableName) {
 void DatabaseController::remove(Database& database, std::string tableName) {
 	if (database.empty()) {
 		std::cout << "The database is empty, there is nothing to remove here.\n";
-	} else {
+	}
+	else {
 		if (database.tableExists(tableName)) {
 			database.removeTable(this->toLowercase(tableName));
 			std::cout << "Successfully removed table " << tableName << std::endl;
-		} else {
+		}
+		else {
 			std::cout << "There is no table with name " << tableName << " in the database.\n";
 		}
 	}
@@ -60,31 +64,39 @@ void DatabaseController::renameTable(Database& database, std::string tableName, 
 	newTableName = this->toLowercase(newTableName);
 	if (database.tableExists(tableName)) {
 		if (database.tableExists(newTableName)) {
-			std::cout << "Error. There is already a table with name " << newTableName << 
+			std::cout << "Error. There is already a table with name " << newTableName <<
 				" in the database.\n";
-		} else {
+		}
+		else {
 			Table& table = this->returnTableByName(database, tableName);
 			TableController().rename(table, newTableName);
 		}
-	} else {
+	}
+	else {
 		std::cout << "Error. There is no table with name " << tableName << ".\n";
-	}	
+	}
 }
 
 //prints the name of the tables in the database
 void DatabaseController::showTables(Database& const database) {
-	std::cout << database.tableNames();
+	if (database.empty()) {
+		std::cout << "Nothing to show here. The database is empty.\n";
+	} else {
+		std::cout << database.tableNames();
+	}
 }
 
 //gives the information about the columns in the table (name and type)
 void DatabaseController::describe(Database& const database, std::string tableName) {
 	if (database.empty()) {
 		std::cout << "Nothing to show here. The database is empty!" << std::endl;
-	} else {
+	}
+	else {
 		if (database.tableExists(this->toLowercase(tableName))) {
 			Table table = this->returnTableByName(database, tableName);
 			TableController().tableInfo(table);
-		} else {
+		}
+		else {
 			std::cout << "sorry. There is no table " << tableName << " in the database.\n";
 		}
 	}
