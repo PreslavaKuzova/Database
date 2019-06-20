@@ -5,20 +5,12 @@
 #include "ColumnController.h"
 #include "TableController.h"
 #include "DatabaseController.h"
+#include "FileController.h"
+#include "File.h"
 
 int main() {
 	Database database("new database");
-	DatabaseController().create(database, "table1");
-	DatabaseController().create(database, "table2");
-	DatabaseController().create(database, "table3");
+	FileController().load(database, "C:/Users/presl/Desktop/table1.txt");
 	DatabaseController().showTables(database);
-	DatabaseController().renameTable(database, "table1", "newname");
-	DatabaseController().showTables(database);
-	DatabaseController().describe(database, "TAble3");
-
-	DatabaseController().renameTable(database, "TablE3", "tabLe3new");
-
-	DatabaseController().showTables(database);
-	
 	return 0;
 }
