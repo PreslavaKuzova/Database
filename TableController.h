@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef TABLE_CONTROLLER_HEADER
+#define TABLE_CONTROLLER_HEADER
+
 #include "Table.h"
 #include "Column.h"
 #include <iostream>
@@ -17,3 +21,5 @@ public:
 	void rename(Table&, std::string);
 	std::string getName(Table& const);
 };
+
+#endif

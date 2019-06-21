@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef TABLE_HEADER
+#define TABLE_HEADER
+
 #include <string>
 #include "Column.h"
 
@@ -34,3 +38,4 @@ public:
 	friend class TableController;
 	friend class Database;
 };
+#endif
