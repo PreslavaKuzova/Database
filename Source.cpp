@@ -10,7 +10,9 @@
 
 int main() {
 	Database database("new database");
-	FileController().load(database, "C:/Users/presl/Desktop/table1.txt");
+	DatabaseController().load(database, "C:/Users/presl/Desktop/table1.txt");
+	DatabaseController().load(database, "C:/Users/presl/Desktop/table1.txt");
 	DatabaseController().showTables(database);
+	DatabaseController().print(database, "table1");
 	return 0;
 }
