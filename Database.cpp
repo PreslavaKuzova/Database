@@ -1,15 +1,17 @@
 #include "Database.h"
 
-
 Database::Database(std::string name) : databaseName(name), size(1), top(-1) {
 	tables = new Table[0];
+	files = new File[0];
 }
 
 Database::Database(const Database& database) :
 	databaseName(database.databaseName), size(database.size), top(database.top) {
 	tables = new Table[size];
+	files = new File[size];
 	for (int i = 0; i <= top; i++) {
 		tables[i] = database.tables[i];
+		files[i] = database.files[i];
 	}
 }
 
@@ -18,13 +20,16 @@ Database& Database::operator=(const Database& database) {
 		this->databaseName = database.databaseName;
 		this->size = database.size;
 		this->top = database.top;
+		
 		delete[] tables;
-
+		delete[] files;
+		
 		tables = new Table[size];
+		files = new File[size];
 
 		for (int i = 0; i <= top; i++) {
-			tables[i] = database.tables
-				[i];
+			tables[i] = database.tables[i];
+			files[i] = database.files[i];
 		}
 	}
 	return *this;
@@ -32,26 +37,35 @@ Database& Database::operator=(const Database& database) {
 
 Database::~Database() {
 	delete[] tables;
+	delete[] files;
 }
 
-void Database::addTable(Table& table) {
+void Database::addTable(Table& table, File& file) {
 	if (this->full() || this->empty()) {
 		this->grow();
 	}
 
-	tables[++top] = table;
+	this->top++;
+	
+	this->tables[this->top] = table;
+	this->files[this->top] = file;
 }
 
 void Database::removeTable(std::string tableName) {
 	int j = 0;
-	Table* array = new Table[this->size];
+	
+	Table* tableArray = new Table[this->size];
+	File* fileArray = new File[this->size];
+
 	for (int i = 0; i <= top; i++) {
 		if (tableName.compare(this->tables[i].getTableName())) {
-			array[j] = this->tables[i];
+			tableArray[j] = this->tables[i];
+			fileArray[j] = this->files[i];
 			j++;
 		}
 	}
-	this->tables = array;
+	this->tables = tableArray;
+	this->files = fileArray;
 }
 
 bool Database::tableExists(std::string tableName) {
@@ -80,15 +94,19 @@ bool Database::empty() const {
 }
 
 void Database::grow() {
-	Table* array = new Table[2 * size];
+	Table* tableArray = new Table[2 * size];
+	File* fileArray = new File[2 * size];
 
 	for (int i = 0; i <= top; i++) {
-		array[i] = tables[i];
+		tableArray[i] = this->tables[i];
+		fileArray[i] = this->files[i];
 	}
 
-	delete[] tables;
+	delete[] this->tables;
+	delete[] this->files;
 
-	tables = array;
+	this->tables = tableArray;
+	this->files = fileArray;
 	size *= 2;
 }
 

@@ -1,7 +1,4 @@
-#include "Database.h"
-#include "Table.h"
 #include "DatabaseController.h"
-#include "TableController.h"
 #include <algorithm>
 
 DatabaseController::DatabaseController() {
@@ -14,25 +11,87 @@ std::string DatabaseController::toLowercase(std::string name) {
 	return name;
 }
 
+//returns the name of the table from the fileName
+std::string DatabaseController::getNameLoadedTable(std::string fileName) {
+	std::vector<std::string> seglist = this->parseString(fileName, '/');
+	fileName = seglist.back();
+	return fileName.substr(0, fileName.find("."));
+}
+
+//parses a string
+std::vector<std::string> DatabaseController::parseString(std::string str, char delimiter) {
+	std::stringstream stream(str);
+	std::string segment;
+	std::vector<std::string> seglist;
+	while (std::getline(stream, segment, delimiter)) {
+		seglist.push_back(segment);
+	}
+
+	return seglist;
+}
+
+//load a file, create a table according to the columns in it and add it to the database given
+void DatabaseController::load(Database& database, std::string fileName) {
+	std::string tableName = this->getNameLoadedTable(fileName);
+
+	if (this->tableExists(database, tableName)) {
+		std::cout << "Table with name " << tableName << " has already been loaded.\n";
+	}
+	else {
+		std::ifstream myfile(fileName);
+		if (myfile.is_open()) {
+			Table table(TableController().createTable(tableName));
+
+			//discarding the first line of the file
+			std::string line = "";
+			std::getline(myfile, line);
+
+			//getting the column names into a vector
+			std::string columns = "";
+			std::getline(myfile, columns);
+			std::vector<std::string> columnList = this->parseString(columns, ' ');
+
+			//getting the column types into a vector
+			std::string types = "";
+			std::getline(myfile, types);
+			std::vector<std::string> typesList = this->parseString(types, ' ');
+
+			//creating columns and adding them to the table
+			for (int i = 0; i < typesList.size(); i++) {
+				Column column = ColumnController().createColumn(columnList.at(i), typesList.at(i));
+				TableController().addColumn(table, column);
+			}
+
+			File file(fileName);
+
+			//adding the table and file to the database only after every check is done
+			this->add(database, table, file);
+		}
+		else {
+			std::cout << "Unable to open file from this directory. Please try again.\n";
+		}
+	}
+}
+
 //adds a new already created table to the database
-void DatabaseController::add(Database& database, Table& const table) {
+void DatabaseController::add(Database& database, Table& const table, File& const file) {
 	if (database.tableExists(TableController().getName(table))) {
 		std::cout << "Error. There is already a table with name " << TableController().getName(table) << " in the database.\n";
 	}
 	else {
-		database.addTable(table);
+		database.addTable(table, file);
 		std::cout << "Successfully added a new table to the database.\n";
 	}
 }
 
 //creates an empty table and adds it to the database
-void DatabaseController::create(Database& database, std::string tableName) {
+void DatabaseController::create(Database& database, std::string tableName, File& const file) {
 	if (database.tableExists(tableName)) {
 		std::cout << "Error. There is already a table with name " << tableName << " in the database.\n";
 	}
 	else {
 		Table table(TableController().createTable(tableName));
-		database.addTable(table);
+		database.addTable(table, file);
 		std::cout << "Successfully added a new table to the database.\n";
 	}
 }
@@ -82,7 +141,7 @@ void DatabaseController::showTables(Database& const database) {
 	if (database.empty()) {
 		std::cout << "Nothing to show here. The database is empty.\n";
 	} else {
-		std::cout << database.tableNames();
+		std::cout << database.tableNames() << std::endl;
 	}
 }
 
@@ -97,7 +156,7 @@ void DatabaseController::describe(Database& const database, std::string tableNam
 			TableController().tableInfo(table);
 		}
 		else {
-			std::cout << "sorry. There is no table " << tableName << " in the database.\n";
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
 		}
 	}
 }
@@ -108,6 +167,29 @@ Table& DatabaseController::returnTableByName(Database& const database, std::stri
 	for (int i = 0; i <= database.getTop(); i++) {
 		if (!toLowercase(tableName).compare(TableController().getName(database.tables[i]))) {
 			return database.tables[i];
+		}
+	}
+}
+
+//returns the file related with the table with the given name
+File& DatabaseController::returnFileByTableName(Database& const database, std::string tableName) {
+	for (int i = 0; i <= database.getTop(); i++) {
+		if (!toLowercase(tableName).compare(TableController().getName(database.tables[i]))) {
+			return database.files[i];
+		}
+	}
+}
+
+//print the file related to the table with the given name
+void DatabaseController::print(Database& const database, std::string tableName) {
+	if (database.empty()) {
+		std::cout << "Nothing to print. The database is empty!" << std::endl;
+	}
+	else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			FileController().printFile(this->returnFileByTableName(database, tableName));
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
 		}
 	}
 }
