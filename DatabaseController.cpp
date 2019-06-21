@@ -199,8 +199,13 @@ void DatabaseController::select(Database& const database, std::string tableName,
 		std::cout << "Nothing to print. The database is empty!" << std::endl;
 	} else {
 		if (database.tableExists(this->toLowercase(tableName))) {
-			File file = this->returnFileByTableName(database, tableName);
-			FileController().selectFromFile(file, columnNumber, value);
+			Table& table = this->returnTableByName(database, tableName);
+			if (TableController().columnExistsByIndex(table, columnNumber)) {
+				File file = this->returnFileByTableName(database, tableName);
+				FileController().selectFromFile(file, columnNumber, value);
+			} else {
+				std::cout << "Invalid column identificator. Please try again with a correct column.\n";
+			}
 		} else {
 			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
 		}
@@ -221,5 +226,45 @@ void DatabaseController::addColumn(Database& const database, std::string tableNa
 		}
 	} else {
 		std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+	}
+}
+
+//returns the number of rows in table tableName that contain value in column columnNumber
+int DatabaseController::count(Database& const database, std::string tableName, int columnNumber, std::string value) {
+	if (database.empty()) {
+		std::cout << "No results found. The database is empty." << std::endl;
+		return 0;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			File& file = this->returnFileByTableName(database, tableName);
+			return FileController().countRows(file, columnNumber, value);
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+			return 0;
+		}
+	}
+}
+
+//for every row of the given file where the column searchColumnNumber contains value
+//modifies column targetColumnNumber to contain targetValue
+void DatabaseController::update(Database& database, std::string tableName, int searchColumnNumber, 
+	std::string searchValue, int targetColumnNumber, std::string targetValue) {
+	if (database.empty()) {
+		std::cout << "Nothing to modify. The database is empty!" << std::endl;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			Table& table = this->returnTableByName(database, tableName);
+			if (TableController().columnExistsByIndex(table, searchColumnNumber) &&
+				TableController().columnExistsByIndex(table, targetColumnNumber)) {
+				//TODO make a check for the types
+				//std::string type = TableController().getColumnTypeFromIndex(table, searchColumnNumber);
+				File& file = this->returnFileByTableName(database, tableName);
+				FileController().updateFile(file, searchColumnNumber, searchValue, targetColumnNumber, targetValue);
+			} else {
+				std::cout << "Invalid column identificators. Please try again with correct columns.\n";
+			}
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+		}
 	}
 }

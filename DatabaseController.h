@@ -37,13 +37,15 @@ public:
 	void print(Database& const, std::string);
 	void select(Database& const, std::string, int, std::string);
 	void addColumn(Database&, std::string, std::string, std::string);
-
+	int count(Database& const, std::string, int, std::string);
+	void update(Database&, std::string, int, std::string, int, std::string);
+	
 	//saves the file into a .txt file
 	void save();
-	void update(Database&, std::string, int, std::string, int, std::string);
+	//delete a row
 	void deleteRows(Database&, std::string, int, std::string);
+	//insert a row
 	void insertRow(Database&, std::string);
-	void count(Database& const, std::string, int, std::string);
 };
 
 #endif

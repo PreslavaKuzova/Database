@@ -1,5 +1,4 @@
 #include "TableController.h"
-#include "ColumnController.h"
 
 TableController::TableController() {
 }
@@ -74,4 +73,15 @@ void TableController::rename(Table& table, std::string name) {
 //returns the name of the table
 std::string TableController::getName(Table& const table) {
 	return table.getTableName();
+}
+
+//returns the type of the column given
+std::string TableController::getColumnTypeFromIndex(Table& const table, int columnNumber) {
+	std::string type = table.getColumnType(columnNumber);
+	return type;
+}
+
+//returns whether column with such index exists 
+bool TableController::columnExistsByIndex(Table& const table, int columnNumber) {
+	return columnNumber <= table.getTop();
 }

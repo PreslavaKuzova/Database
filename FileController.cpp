@@ -36,3 +36,33 @@ void FileController::insertColumn(File& file) {
 	}
 	file.addNewColumn();
 }
+
+//returns the number of rows that contain the value in column columnNumber
+int FileController::countRows(File& const file, int columnNumber, std::string value){
+	int count = 0;
+	if (file.isEmpty()) {
+		std::cout << "The file is empty. No results.\n";
+		return 0;
+	} else {
+		
+		for (int i = 0; i < file.getRows(); i++) {
+			if (!value.compare(file.array[i][columnNumber])) {
+				count++;
+			}
+		}
+	}
+
+	return count;
+}
+
+void FileController::updateFile(File& file, int searchColumn, std::string value, int targetColumn, std::string target) {
+	if (file.isEmpty()) {
+		std::cout << "The file is empty. Nothing to print.\n";
+	} else {
+		for (int i = 0; i < file.getRows(); i++) {
+			if (!value.compare(file.array[i][searchColumn])) {
+				file.array[i][targetColumn] = target;
+			}
+		}
+	}
+}

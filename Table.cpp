@@ -95,6 +95,10 @@ std::string Table::getTableName() const {
 	return this->tableName;
 }
 
+std::string Table::getColumnType(int columnNumber) {
+	return this->columns[columnNumber].getType();
+}
+
 void Table::setTableName(std::string name) {
 	this->tableName = name;
 }

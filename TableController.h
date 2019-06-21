@@ -5,13 +5,14 @@
 
 #include "Table.h"
 #include "Column.h"
+#include "ColumnController.h"
 #include <iostream>
 #include <algorithm>
 
 class TableController {
 private:
 	std::string toLowercase(std::string);
-public:
+
 	TableController();
 	Table createTable(std::string);
 	void addColumn(Table&, Column& const);
@@ -21,6 +22,12 @@ public:
 	void columns(Table& const);
 	void rename(Table&, std::string);
 	std::string getName(Table& const);
+	std::string getColumnTypeFromIndex(Table& const, int);
+	bool columnExistsByIndex(Table& const, int);
+public:
+
+
+	friend class DatabaseController;
 };
 
 #endif

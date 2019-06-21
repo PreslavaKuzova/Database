@@ -32,6 +32,7 @@ public:
 	void addNewRow();
 
 	friend class FileController;
+	friend class Database;
 };
 
 #endif

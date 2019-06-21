@@ -66,6 +66,7 @@ void Database::removeTable(std::string tableName) {
 	}
 	this->tables = tableArray;
 	this->files = fileArray;
+	this->top--;
 }
 
 bool Database::tableExists(std::string tableName) {

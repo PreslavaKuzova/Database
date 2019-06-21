@@ -22,6 +22,7 @@ private:
 	bool columnExists(std::string);
 	std::string columnNames();
 	std::string tableInfo();
+	std::string getColumnType(int);
 
 	std::string getTableName() const;
 	void setTableName(std::string);
