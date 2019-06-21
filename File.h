@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef FILE_HEADER
+#define FILE_HEADER
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -24,3 +28,5 @@ public:
 	int getColumns() const;
 	int getRows() const;
 };
+
+#endif

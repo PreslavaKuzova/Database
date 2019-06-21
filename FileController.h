@@ -1,29 +1,23 @@
-#include <sstream>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "ColumnController.h"
-#include "TableController.h"
-#include "DatabaseController.h"
-#include "Database.h"
+#pragma once
+
+#ifndef FILE_CONTROLLER_HEADER
+#define FILE_CONTROLLER_HEADER
+
 #include "File.h"
 
 class FileController {
 private:
-	std::string getNameLoadedTable(std::string);
-	std::vector<std::string> parseString(std::string, char);
 public:
 	FileController();
+	void printFile(File& const);
 	
-	void load(Database&, std::string);
-	
-	void save();
+	//to be continued
 	void select();
-	void update();
+	void updateFile();
 	void deleteRow();
-	void insert();
+	void insertRow();
 	void innerJoin();
 	void count();
 	void aggregate();
 };
+#endif

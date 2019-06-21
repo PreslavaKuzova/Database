@@ -1,8 +1,8 @@
 #include "File.h"
 
 File::File() {
-	this->rows = 0;
-	this->columns = 0;
+	this->rows = 1;
+	this->columns = 1;
 	this->array = new std::string *[this->rows];
 	array[0] = new std::string[this->columns];
 }
@@ -54,14 +54,15 @@ File::File(const File& file): rows(file.rows), columns(file.columns) {
 
 File& File::operator=(const File& file) {
 	if (this != &file) {
-		this->rows = file.rows;
-		this->columns = file.columns;
 
 		//deleting the array
 		for (int i = 0; i < this->rows; i++) {
 			delete[] this->array[i];
 		}
 		delete[] this->array;
+
+		this->rows = file.rows;
+		this->columns = file.columns;
 
 		//creating a new array
 		this->array = new std::string*[this->rows];
