@@ -2,12 +2,11 @@
 
 File::File() {
 	this->rows = 1;
-	this->columns = 1;
+	this->columns = 0;
 	this->array = new std::string *[this->rows];
 	array[0] = new std::string[this->columns];
 }
 
-//TODO look again here - some changes will apply
 File::File(std::string fileName) {
 	std::ifstream myfile(fileName);
 
@@ -87,6 +86,34 @@ File::~File() {
 	delete[] this->array;
 }
 
+//creates a new column in the array and assigns the values to NULL
+void File::addNewColumn() {
+	//creating new two dimentional array
+	std::string** newArray = new std::string*[this->rows];
+	for (int i = 0; i < this->rows; i++) {
+		newArray[i] = new std::string[this->columns + 1];
+	}
+
+	//transfering the data from array to newArray
+	for (int i = 0; i < this->rows; i++) {
+		for (int j = 0; j < this->columns; j++) {
+			newArray[i][j] = this->array[i][j];
+		}
+		newArray[i][this->columns] = "NULL";
+	}
+
+	//deleting the array
+	for (int i = 0; i < this->rows; i++) {
+		delete[] this->array[i];
+	}
+	delete[] this->array;
+
+	this->columns++;
+
+	//assigning the pointer to the newly created array
+	this->array = newArray;
+}
+
 //assigning the values of the dimensions of the array
 void File::findDimensions(std::string stringDimensions) {
 	//here we use library functions to get the the dimensions and separate them
@@ -101,6 +128,11 @@ void File::findDimensions(std::string stringDimensions) {
 	//here we use a library function to convert the values from string to int
 	this->columns = std::stoi(seglist.at(0));
 	this->rows = std::stoi(seglist.at(1));
+}
+
+//returns true or false depending on whether the file is empty
+bool File::isEmpty() {
+	return this->columns == 0;
 }
 
 //printing the file

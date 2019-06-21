@@ -10,12 +10,14 @@ private:
 public:
 	FileController();
 	void printFile(File& const);
-	
+	void selectFromFile(File& const, int, std::string);
+	void insertColumn(File&);
+
 	//to be continued
-	void select();
 	void updateFile();
 	void deleteRow();
 	void insertRow();
+	
 	void innerJoin();
 	void count();
 	void aggregate();

@@ -16,7 +16,7 @@ private:
 	std::string **array;
 
 	void findDimensions(std::string);
-
+	bool isEmpty();
 public:
 	File();
 	File(std::string);
@@ -27,6 +27,11 @@ public:
 	void print();
 	int getColumns() const;
 	int getRows() const;
+	
+	void addNewColumn();
+	void addNewRow();
+
+	friend class FileController;
 };
 
 #endif

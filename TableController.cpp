@@ -28,6 +28,11 @@ void TableController::addColumn(Table& table, Column& const column) {
 	}
 }
 
+//returns either true or false depending whether column with such name has been added to the table
+bool TableController::columnExists(Table& table, std::string columnName) {
+	return table.columnExists(columnName);
+}
+
 //creates a column and then adds it to the list
 void TableController::createColumn(Table& table, std::string name, std::string type) {
 	if (table.columnExists(this->toLowercase(name))) {
@@ -46,8 +51,7 @@ void TableController::tableInfo(Table& const table) {
 	if (!table.empty()) {
 		std::cout << "Table " + table.getTableName() + " contains the following columns with the type showed:\n";
 		std::cout << table.tableInfo();
-	}
-	else {
+	} else {
 		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
 	}
 }
@@ -57,8 +61,7 @@ void TableController::columns(Table& const table) {
 	if (!table.empty()) {
 		std::cout << "Table " << table.getTableName() << " contains columns with the following names:\n";
 		std::cout << table.columnNames() << std::endl;
-	}
-	else {
+	} else {
 		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
 	}
 }

@@ -18,27 +18,28 @@
 
 class DatabaseController {
 private:
+	void add(Database&, Table& const, File& const);
+	void create(Database&, std::string, File& const);
+	bool tableExists(Database&, std::string);
+	Table& returnTableByName(Database& const, std::string);
+	File& returnFileByTableName(Database& const, std::string);
+
 	std::string toLowercase(std::string);
 	std::string getNameLoadedTable(std::string);
 	std::vector<std::string> parseString(std::string, char);
 public:
 	DatabaseController();
 	void load(Database&, std::string);
-	void add(Database&, Table& const, File& const);
-	void create(Database&, std::string, File& const);
 	void remove(Database&, std::string);
 	void renameTable(Database&, std::string, std::string);
-	bool tableExists(Database&, std::string);
 	void showTables(Database& const);
 	void describe(Database& const, std::string);
-	Table& returnTableByName(Database& const, std::string);
-	File& returnFileByTableName(Database& const, std::string);
 	void print(Database& const, std::string);
-	
+	void select(Database& const, std::string, int, std::string);
+	void addColumn(Database&, std::string, std::string, std::string);
+
 	//saves the file into a .txt file
 	void save();
-	void select();
-	void addColumn(Database&, std::string, std::string, std::string);
 	void update(Database&, std::string, int, std::string, int, std::string);
 	void deleteRows(Database&, std::string, int, std::string);
 	void insertRow(Database&, std::string);

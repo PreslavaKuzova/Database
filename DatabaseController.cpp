@@ -184,12 +184,42 @@ File& DatabaseController::returnFileByTableName(Database& const database, std::s
 void DatabaseController::print(Database& const database, std::string tableName) {
 	if (database.empty()) {
 		std::cout << "Nothing to print. The database is empty!" << std::endl;
-	}
-	else {
+	} else {
 		if (database.tableExists(this->toLowercase(tableName))) {
 			FileController().printFile(this->returnFileByTableName(database, tableName));
 		} else {
 			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
 		}
+	}
+}
+
+//prints the rows that contain <value> in the given column number of the given table
+void DatabaseController::select(Database& const database, std::string tableName, int columnNumber, std::string value) {
+	if (database.empty()) {
+		std::cout << "Nothing to print. The database is empty!" << std::endl;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			File file = this->returnFileByTableName(database, tableName);
+			FileController().selectFromFile(file, columnNumber, value);
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+		}
+	}
+}
+
+//adds new column to the file, related to the table with tableName and assigns the new values to NULL
+void DatabaseController::addColumn(Database& const database, std::string tableName, std::string columnName, std::string columnType) {
+	if (database.tableExists(this->toLowercase(tableName))) {
+		Table& table = this->returnTableByName(database, tableName);
+		if (TableController().columnExists(table, this->toLowercase(columnName))) {
+			std::cout << "There is already a column " << columnName << 
+				" in table " << tableName << std::endl;
+		} else {
+			TableController().createColumn(table, columnName, columnType);
+			File& file = this->returnFileByTableName(database, tableName);
+			FileController().insertColumn(file);
+		}
+	} else {
+		std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
 	}
 }
