@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef COLUMN_CONTROLLER_HEADER
+#define COLUMN_CONTROLLER_HEADER
+
 #include <string>
 #include "Column.h"
 
@@ -12,3 +16,5 @@ public:
 	std::string getColumnInfo(Column&);
 	std::string getColumnName(Column& const);
 };
+
+#endif

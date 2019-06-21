@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef COLUMN_HEADER
+#define COLUMN_HEADER
+
 #include <string>
 
 class Column {
@@ -23,3 +27,5 @@ public:
 	friend class ColumnController;
 	friend class Table;
 };
+
+#endif
