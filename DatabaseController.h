@@ -24,6 +24,11 @@ private:
 	Table& returnTableByName(Database& const, std::string);
 	File& returnFileByTableName(Database& const, std::string);
 
+	int inputInt();
+	float inputDecimal();
+	std::string inputString();
+	std::string inputDependingOnType(std::string);
+
 	std::string toLowercase(std::string);
 	std::string getNameLoadedTable(std::string);
 	std::vector<std::string> parseString(std::string, char);
@@ -35,13 +40,13 @@ public:
 	void showTables(Database& const);
 	void describe(Database& const, std::string);
 	void print(Database& const, std::string);
-	void select(Database& const, std::string, int, std::string);
+	void select(Database& const, std::string);
 	void addColumn(Database&, std::string, std::string, std::string);
-	int count(Database& const, std::string, int, std::string);
-	void update(Database&, std::string, int, std::string, int, std::string);
+	int count(Database& const, std::string);
+	void update(Database&, std::string);
 	
 	//saves the file into a .txt file
-	void save();
+	void save(Database& const, std::string, std::string);
 	//delete a row
 	void deleteRows(Database&, std::string, int, std::string);
 	//insert a row
