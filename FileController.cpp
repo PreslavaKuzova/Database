@@ -3,6 +3,25 @@
 FileController::FileController() {
 }
 
+//returns the number of rows
+int FileController::getRows(File& file) {
+	return file.getRows();
+}
+
+//returns the number of columns
+int FileController::getColumns(File& file) {
+	return file.getColumns();
+}
+
+//returns a string containing the data from row i
+std::string FileController::returnRowStringByIndex(File& const file, int index) {
+	std::string row = "";
+	for (int i = 0; i < file.getColumns(); i++) {
+		row += file.array[index][i] + " ";
+	}
+	return row;
+}
+
 //prints the content of the file given
 void FileController::printFile(File& const file) {
 	if (file.isEmpty()) {

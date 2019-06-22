@@ -8,6 +8,9 @@
 class FileController {
 private:
 	FileController();
+	int getRows(File& const);
+	int getColumns(File& const);
+	std::string returnRowStringByIndex(File& const, int);
 	void printFile(File& const);
 	void selectFromFile(File& const, int, std::string);
 	void insertColumn(File&);

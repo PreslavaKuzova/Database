@@ -103,6 +103,11 @@ void DatabaseController::load(Database& database, std::string fileName) {
 	else {
 		std::ifstream myfile(fileName);
 		if (myfile.is_open()) {
+			
+			//sets the name of the database
+			std::vector<std::string> location = this->parseString(fileName, '/');
+			database.setName(location.at(location.size() - 2));
+			
 			Table table(TableController().createTable(tableName));
 
 			//discarding the first line of the file
@@ -371,8 +376,7 @@ void DatabaseController::deleteRows(Database& database, std::string tableName) {
 			File& file = this->returnFileByTableName(database, tableName);
 
 			FileController().deleteRows(file, searchColumnNumber, searchValue);
-		}
-		else {
+		} else {
 			std::cout << "Invalid column identificators. Please try again with correct columns.\n";
 		}
 	}
@@ -381,6 +385,22 @@ void DatabaseController::deleteRows(Database& database, std::string tableName) {
 //saves the table into a .txt file
 void DatabaseController::save(Database& const database, std::string tableName, std::string location) {
 	if (this->check(database, tableName)) {
+		Table& table = this->returnTableByName(database, tableName);
+		File& file = this->returnFileByTableName(database, tableName);
 
+		std::ofstream outfile(location);
+
+		int columns = FileController().getColumns(file);
+		int rows = FileController().getRows(file);
+		
+		outfile << std::to_string(columns) + " " + std::to_string(rows) << std::endl;
+		outfile << TableController().columns(table) << std::endl;
+		outfile << TableController().types(table) << std::endl;
+
+		for (int i = 0; i < rows; i++) {
+			outfile << FileController().returnRowStringByIndex(file, i) << std::endl;
+		}
+
+		outfile.close();
 	}
 }
