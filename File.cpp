@@ -114,6 +114,82 @@ void File::addNewColumn() {
 	this->array = newArray;
 }
 
+//adds a new row to the file
+void File::addNewRow(std::string values[]) {
+	//creating new two dimentional array
+	std::string** newArray = new std::string*[this->rows + 1];
+	for (int i = 0; i < this->rows + 1; i++) {
+		newArray[i] = new std::string[this->columns];
+	}
+
+	//transfering the data from array to newArray
+	for (int i = 0; i < this->rows; i++) {
+		for (int j = 0; j < this->columns; j++) {
+			newArray[i][j] = this->array[i][j];
+		}
+	}
+
+	//adding the new row
+	for (int i = 0; i < this->columns; i++) {
+		newArray[this->rows][i] = values[i];
+	}
+
+	//deleting the array
+	for (int i = 0; i < this->rows; i++) {
+		delete[] this->array[i];
+	}
+	delete[] this->array;
+
+	this->rows++;
+
+	//assigning the pointer to the newly created array
+	this->array = newArray;
+}
+
+//returns the number of columns that contain the value in column columnNumber
+int File::countRows(int columnNumber, std::string value) {
+	int count = 0;
+	for (int i = 0; i < this->getRows(); i++) {
+		if (!value.compare(this->array[i][columnNumber])) {
+			count++;
+		}
+	}
+	return count;
+}
+
+//deletes every row that contains value at position columnNumber
+void File::deleteRows(int columnNumber, std::string value) {
+	int numberOfRowsToDelete = this->countRows(columnNumber, value);
+	int newNumberOfRows = this->rows - numberOfRowsToDelete;
+
+	//creating a new array
+	std::string** newArray = new std::string*[newNumberOfRows];
+	for (int i = 0; i < newNumberOfRows; i++) {
+		newArray[i] = new std::string[this->columns];
+	}
+
+	//transfering the data from array to newArray
+	for (int m = 0, i = 0; i < this->rows; i++) {
+		if (value.compare(this->array[i][columnNumber])) {
+			for (int j = 0; j < this->columns; j++) {
+				newArray[m][j] = array[i][j];
+			}
+			m++;
+		} 
+	}
+
+	//deleting the array
+	for (int i = 0; i < this->rows; i++) {
+		delete[] this->array[i];
+	}
+	delete[] this->array;
+
+	this->rows = newNumberOfRows;
+
+	//assigning the pointer to the newly created array
+	this->array = newArray;
+}
+
 //assigning the values of the dimensions of the array
 void File::findDimensions(std::string stringDimensions) {
 	//here we use library functions to get the the dimensions and separate them

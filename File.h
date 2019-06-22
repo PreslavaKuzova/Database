@@ -29,7 +29,9 @@ public:
 	int getRows() const;
 	
 	void addNewColumn();
-	void addNewRow();
+	void addNewRow(std::string[]);
+	int countRows(int, std::string);
+	void deleteRows(int, std::string);
 
 	friend class FileController;
 	friend class Database;

@@ -11,6 +11,21 @@ std::string DatabaseController::toLowercase(std::string name) {
 	return name;
 }
 
+//makes checks needed before executing the method
+bool DatabaseController::check(Database& database, std::string tableName) {
+	if (database.empty()) {
+		std::cout << "Nothing to modify. The database is empty!" << std::endl;
+		return false;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			return true;
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+			return false;
+		}
+	}
+}
+
 //allows to enter integers only
 int DatabaseController::inputInt() {
 	int value = 0;
@@ -354,7 +369,76 @@ void DatabaseController::update(Database& database, std::string tableName) {
 	}
 }
 
+//inserts a new row to the file and makes sure the data is correct
+void DatabaseController::insertRow(Database& database, std::string tableName) {
+	if (database.empty()) {
+		std::cout << "Nothing to modify. The database is empty!" << std::endl;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			Table& table = DatabaseController().returnTableByName(database, tableName);
+			std::string type = TableController().types(table);
+			std::string column = TableController().columns(table);
+			std::vector<std::string> types = this->parseString(type, ' ');
+			std::vector<std::string> columns = this->parseString(column, ' ');
+
+			std::string *newRow = new std::string[types.size()];
+
+			std::cout << "Enter the values of the row:\n";
+			for (int i = 0; i < types.size(); i++) {
+				std::cout << columns.at(i) << ": ";
+				newRow[i] = this->inputDependingOnType(types.at(i));
+			}
+
+			File& file = this->returnFileByTableName(database, tableName);
+			FileController().insertRow(file, newRow);
+
+			delete[] newRow;
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+		}
+	}
+}
+
+//deletes every row from the file where column columnNumber contains value
+void DatabaseController::deleteRows(Database& database, std::string tableName) {
+	if (database.empty()) {
+		std::cout << "Nothing to modify. The database is empty!" << std::endl;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
+			Table& table = this->returnTableByName(database, tableName);
+
+			std::cout << "Enter search column index: ";
+			int searchColumnNumber = this->inputInt();
+
+			if (TableController().columnExistsByIndex(table, searchColumnNumber)) {
+
+				std::string typeSearch = TableController().getColumnTypeFromIndex(table, searchColumnNumber);
+
+				std::cout << "Enter search column value: ";
+				std::string searchValue = this->inputDependingOnType(typeSearch);
+
+				File& file = this->returnFileByTableName(database, tableName);
+				
+				FileController().deleteRows(file, searchColumnNumber, searchValue);
+			} else {
+				std::cout << "Invalid column identificators. Please try again with correct columns.\n";
+			}
+		} else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+		}
+	}
+}
+
 //saves the table into a .txt file
 void DatabaseController::save(Database& const database, std::string tableName, std::string location) {
+	if (database.empty()) {
+		std::cout << "Nothing to modify. The database is empty!" << std::endl;
+	} else {
+		if (database.tableExists(this->toLowercase(tableName))) {
 
+		}
+		else {
+			std::cout << "Sorry. There is no table " << tableName << " in the database.\n";
+		}
+	}
 }

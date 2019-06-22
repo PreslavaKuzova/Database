@@ -12,15 +12,16 @@ int main() {
 	Database database("new database");
 	DatabaseController().load(database, "C:/Users/presl/Desktop/table1.txt");
 	DatabaseController().load(database, "C:/Users/presl/Desktop/table2.txt");
-	DatabaseController().print(database, "table1");
-	DatabaseController().print(database, "table2");
+	//DatabaseController().print(database, "table1");
+	//DatabaseController().print(database, "table2");
 	//DatabaseController().select(database, "table1");
-	DatabaseController().addColumn(database, "table1", "column4", "int");
-	DatabaseController().print(database, "table1");
+	//DatabaseController().addColumn(database, "table1", "column4", "int");
+	//DatabaseController().print(database, "table1");
 	//std::cout << DatabaseController().count(database, "table1") << std::endl;
 	//DatabaseController().update(database, "table1");
-	DatabaseController().remove(database, "table1");
-	DatabaseController().remove(database, "table1");
-	DatabaseController().showTables(database);
+	//DatabaseController().insertRow(database, "table1");
+	DatabaseController().print(database, "table1");
+	DatabaseController().deleteRows(database, "table1");
+	DatabaseController().print(database, "table1");
 	return 0;
 }

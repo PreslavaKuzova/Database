@@ -19,14 +19,13 @@ private:
 	void createColumn(Table&, std::string, std::string);
 	bool columnExists(Table&, std::string);
 	void tableInfo(Table& const);
-	void columns(Table& const);
+	std::string columns(Table& const);
+	std::string types(Table& const);
 	void rename(Table&, std::string);
 	std::string getName(Table& const);
 	std::string getColumnTypeFromIndex(Table& const, int);
 	bool columnExistsByIndex(Table& const, int);
 public:
-
-
 	friend class DatabaseController;
 };
 

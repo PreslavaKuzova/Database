@@ -56,12 +56,22 @@ void TableController::tableInfo(Table& const table) {
 }
 
 //gives information about the names of the columns in the table
-void TableController::columns(Table& const table) {
+std::string TableController::columns(Table& const table) {
 	if (!table.empty()) {
-		std::cout << "Table " << table.getTableName() << " contains columns with the following names:\n";
-		std::cout << table.columnNames() << std::endl;
+		return table.columnNames();
 	} else {
 		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
+		return "";
+	}
+}
+
+//returns a string containing the types of the columns
+std::string TableController::types(Table& const table) {
+	if (!table.empty()) {
+		return table.columnTypes();
+	} else {
+		std::cout << "Sorry, nothing to show here. Table " + table.getTableName() + " is empty.\n";
+		return "";
 	}
 }
 

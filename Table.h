@@ -21,6 +21,7 @@ private:
 	void add(Column&);
 	bool columnExists(std::string);
 	std::string columnNames();
+	std::string columnTypes();
 	std::string tableInfo();
 	std::string getColumnType(int);
 

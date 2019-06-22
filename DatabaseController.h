@@ -24,6 +24,7 @@ private:
 	Table& returnTableByName(Database& const, std::string);
 	File& returnFileByTableName(Database& const, std::string);
 
+	bool check(Database& const, std::string);
 	int inputInt();
 	float inputDecimal();
 	std::string inputString();
@@ -44,13 +45,9 @@ public:
 	void addColumn(Database&, std::string, std::string, std::string);
 	int count(Database& const, std::string);
 	void update(Database&, std::string);
-	
-	//saves the file into a .txt file
-	void save(Database& const, std::string, std::string);
-	//delete a row
-	void deleteRows(Database&, std::string, int, std::string);
-	//insert a row
 	void insertRow(Database&, std::string);
+	void deleteRows(Database&, std::string);
+	void save(Database& const, std::string, std::string);
 };
 
 #endif

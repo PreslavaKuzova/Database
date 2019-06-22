@@ -62,6 +62,14 @@ std::string Table::columnNames() {
 	return stringColumns;
 }
 
+std::string Table::columnTypes() {
+	std::string stringTypes = "";
+	for (int i = 0; i <= this->top; i++) {
+		stringTypes += this->columns[i].type+ " ";
+	}
+	return stringTypes;
+}
+
 std::string Table::tableInfo() {
 	std::string description = "";
 	for (int i = 0; i <= top; i++) {

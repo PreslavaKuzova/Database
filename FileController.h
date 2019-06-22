@@ -13,10 +13,9 @@ private:
 	void insertColumn(File&);
 	int countRows(File& const, int, std::string);
 	void updateFile(File&, int, std::string, int, std::string);
+	void insertRow(File&, std::string[]);
+	void deleteRows(File&, int, std::string);
 public:
-	//to be continued
-	void deleteRow();
-	void insertRow();
 	void innerJoin();
 	void aggregate();
 
