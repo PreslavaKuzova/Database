@@ -11,18 +11,14 @@
 int main() {
 	Database database("new database");
 	DatabaseController().load(database, "C:/Users/presl/Desktop/table1.txt");
-	DatabaseController().load(database, "C:/Users/presl/Desktop/table1.txt");
-	DatabaseController().showTables(database);
-	DatabaseController().describe(database, "table1");
+	DatabaseController().load(database, "C:/Users/presl/Desktop/table2.txt");
 	DatabaseController().print(database, "table1");
-	//we have to make sure the value entered matches the data type of the column
-	DatabaseController().select(database, "table1", 2, "6.00");
+	DatabaseController().print(database, "table2");
+	//DatabaseController().select(database, "table1");
 	DatabaseController().addColumn(database, "table1", "column4", "int");
 	DatabaseController().print(database, "table1");
-	std::cout << DatabaseController().count(database, "table1", 2, "6.00") << std::endl;
-	//we have to make sure the value entered matches the data type of the column
-	DatabaseController().update(database, "table1", 2, "6.00", 3, "7.00");
-	DatabaseController().print(database, "table1");
+	//std::cout << DatabaseController().count(database, "table1") << std::endl;
+	//DatabaseController().update(database, "table1");
 	DatabaseController().remove(database, "table1");
 	DatabaseController().remove(database, "table1");
 	DatabaseController().showTables(database);
